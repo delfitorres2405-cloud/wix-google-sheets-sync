@@ -86,4 +86,4 @@ Llama a las funciones definidas previamente para procesar un producto de punta a
 Si creó el producto correctamente, actualiza su inventario con los datos interpretados.
 Si no puede crearse el producto, se termina su ejecución. En caso de que el producto indique "Pre order", se imprime un mensaje por pantalla para activar esa opción manualmente en Wix, ya que no es posible hacerlo mediante código.
 
-> Nota: para funcionar, el proyecto requiere un archivo `.env` con las variables `WIX_API_KEY` y `WIX_SITE_ID`, y un archivo `credentials.json` de Google Cloud (OAuth) en la misma carpeta.
+> Nota: para funcionar, el proyecto requiere un archivo `.env` con las variables `WIX_API_KEY`, `WIX_SITE_ID` y `SPREADSHEET_ID`, y un archivo `credentials.json` de Google Cloud (OAuth) en la misma carpeta.
