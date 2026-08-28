@@ -16,13 +16,20 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 load_dotenv()
 
+# Credenciales cargadas desde el archivo .env
 WIX_API_KEY = os.getenv("WIX_API_KEY")
 WIX_SITE_ID = os.getenv("WIX_SITE_ID")
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 
+# Headers para las peticiones a la API de Wix
 HEADERS_WIX = {"Authorization": WIX_API_KEY, "wix-site-id": WIX_SITE_ID, "Content-Type": "application/json"}
 
+# Archivo local donde se registran las filas ya subidas para no reprocesarlas
 ARCHIVO_PROCESADOS = "filas_ya_subidas.txt"
+
+# Límites de longitud que exige la API de Wix
+MAX_LARGO_TITULO = 80
+MAX_LARGO_SKU = 40
 
 # Función obtener_servicio_sheets(): su objetivo es devolver un objeto de servicio ('sheets') para interactuar con la API de Google Sheets.
 def obtener_servicio_sheets():
@@ -98,6 +105,8 @@ def obtener_datos(spreadsheet_id, fila_inicio, fila_fin):
             continue
 
         try:
+            print(f"--- FILA {idx} ---")
+
             titulo = fila[idx_titulo] if len(fila) > idx_titulo and fila[idx_titulo] else "Sin Descripción"
             sku    = fila[idx_sku]    if len(fila) > idx_sku    and fila[idx_sku]    else f"SIN-SKU-{idx}"
             costo  = fila[idx_costo]  if len(fila) > idx_costo  and fila[idx_costo]  else "0"
@@ -105,7 +114,16 @@ def obtener_datos(spreadsheet_id, fila_inicio, fila_fin):
             precio = fila[idx_precio] if len(fila) > idx_precio and fila[idx_precio] else "1"
 
             titulo_limpio = titulo.strip()
+
+            if len(titulo_limpio) > MAX_LARGO_TITULO:
+                print(f"⚠️ Título recortado (tenía {len(titulo_limpio)} caracteres)")
+                titulo_limpio = titulo_limpio[:MAX_LARGO_TITULO].rstrip()
+
             sku_extraido  = sku.strip() 
+
+            if len(sku_extraido) > MAX_LARGO_SKU:
+                print(f"⚠️ SKU recortado (tenía {len(sku_extraido)} caracteres): {sku_extraido}")
+                sku_extraido = sku_extraido[:MAX_LARGO_SKU].rstrip()
 
             sku_sin_separadores = re.sub(r'[\s\-/]', '', sku_extraido)
 
@@ -115,7 +133,6 @@ def obtener_datos(spreadsheet_id, fila_inicio, fila_fin):
                 fitment = ""
                 print(f"SKU '{sku_extraido}' no tiene 7 ni 11 números puros; no se buscará fitment.")
 
-            print(f"--- FILA {idx} ---")
             print(f"ITEM (TÍTULO): {titulo_limpio}")
             print(f"SKU:           {sku_extraido}")
             print(f"QTY (STOCK):   {stock}")
@@ -363,5 +380,4 @@ def procesar_producto_completo(titulo, sku, costo, stock, precio, fitment):
     return True
 
 if __name__ == "__main__":
-    obtener_datos(SPREADSHEET_ID, 877, 878)
-    
+    obtener_datos(SPREADSHEET_ID, 884, 884)
