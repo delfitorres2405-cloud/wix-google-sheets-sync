@@ -5,11 +5,11 @@ Script en Python para automatizar la carga de catálogo en Wix Stores. Lee produ
 La idea de desarrollar este código nació cuando estaba subiendo productos manualmente a Wix, leyendo los datos desde una planilla en Google Sheets y de repente pensé "Esto se puede automatizar". Por cada producto, tenía que copiar el título, el SKU, memorizar precios de costo y venta para después volcarlos en los campos correspondientes de la plataforma; todo esto implicaba cambiar de pestaña de forma alternada, invirtiendo una cantidad de tiempo considerable en tareas repetitivas (además de que luego tengo que hacer la edición de las imágenes, redacción de descripciones y búsqueda del diagrama de partes). 
 
 ## Características Principales
-Integración con Google Workspace: Conexión segura a la API de Google Sheets mediante OAuth2 para leer las filas de nuevos listados.
+• Integración con Google Workspace: Conexión segura a la API de Google Sheets mediante OAuth2 para leer las filas de nuevos listados.
 
-Web Scraping: Extracción automatizada de compatibilidad de vehículos (fitment) con el producto, consultando los sitios RealOEM y Bimmer.
+• Web Scraping: Extracción automatizada de compatibilidad de vehículos (fitment) con el producto, consultando los sitios RealOEM y Bimmer.
 
-Sincronización con Wix: Carga e inserción automática de datos del catálogo a través de REST API.
+• Sincronización con Wix: Carga e inserción automática de datos del catálogo a través de REST API.
 
 ### Lenguaje
 Python 3
